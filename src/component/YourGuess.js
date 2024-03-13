@@ -3,6 +3,7 @@ import ToggleButton from './ToggleButton';
 import './YourGuess.css';
 export default function YourGuess({ upDateGuess, yourScore, win, guessBtnEnable }) {
     const [guess, setGuess] = useState(0);
+    console.log(win);
 
 
     const incrementFunc = () => {
@@ -23,7 +24,7 @@ export default function YourGuess({ upDateGuess, yourScore, win, guessBtnEnable 
             upDateGuess(prevGuess);
             return prevGuess;
         });
-        
+
     }
 
 
@@ -37,7 +38,7 @@ export default function YourGuess({ upDateGuess, yourScore, win, guessBtnEnable 
             <ToggleButton guess={guess} incrementFunc={incrementFunc} decreamentFunc={decreamentFunc} />
 
             <div className='guess-button'>
-                <button onClick={handleGuessupDate} disabled={guessBtnEnable} >{win === 'human' ? <p style={{color:"rgba(255, 0, 0,1)",fontSize:'20px'}}>you win!</p> : 'Make a Guess'}</button>
+                <button onClick={handleGuessupDate} disabled={guessBtnEnable} >{win === 'human' ? <p style={{ color: "rgba(255, 0, 0,1)", fontSize: '20px' }}>you win!</p> : 'Make a Guess'}</button>
             </div>
         </div>
     )

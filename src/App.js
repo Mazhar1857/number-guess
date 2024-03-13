@@ -5,7 +5,7 @@ import ComputerGuess from './component/ComputerGuess';
 import FootNote from './component/FootNote';
 import NextRound from './component/NextRound';
 import { useEffect, useState } from 'react';
-import useStateRef from 'react-usestateref';
+
 
 
 
@@ -17,18 +17,13 @@ function App() {
   const [result, setResult] = useState(false);
   const [compScore, setCompScore] = useState(0);
   const [yourScore, setYourScore] = useState(0);
-  const [compDiff, setCompDiff] = useState(0);
-  const [humanDiff, setHumanDiff] = useState(0);
+  const [compDiff, setCompDiff] = useState(null);
+  const [humanDiff, setHumanDiff] = useState(null);
   const [round, setRound] = useState(1);
   const [guessBtnEnable, setGuessBtnEnable] = useState(false);
   const [nextBtnEnable, setNextBtnEnable] = useState(true);
 
-  const [win, setWin] = useState('');
-
-  // const makeGuessBtn = () => {
-
-  // }
-
+  const [win, setWin] = useState(false);
 
 
   useEffect(() => {
@@ -38,15 +33,15 @@ function App() {
 
   useEffect(() => {
     setHumanDiff(Math.abs(targetNum - guess));
-  }, [compGuess])
+  }, [compDiff])
 
 
   useEffect(() => {
-    if (compDiff !== 0 && humanDiff !== 0) {
-      setWin(() => {
+    setWin(() => {
+      if (compDiff !== null && humanDiff !== null) {
         return compDiff >= humanDiff ? 'human' : 'computer';
-      })
-    }
+      }
+    })
 
   }, [humanDiff]);
 
@@ -71,17 +66,18 @@ function App() {
 
 
   const nextRound = () => {
-    setWin('')
+    setWin(null)
     setResult(prevResult => false);
     setRound((preRound) => {
       return preRound + 1;
     })
     setGuessBtnEnable(false);
+    setNextBtnEnable(true);
   }
 
   const upDateGuess = (humanGuess) => {
 
-    console.log(humanGuess);
+
     const newTargetNum = Math.floor((Math.random() * 10) + 1);
     const newCompGuess = Math.floor((Math.random() * 10) + 1);
 
@@ -92,16 +88,15 @@ function App() {
     setTargetNum(() => {
       return newTargetNum;
     });
-    console.log(targetNum);
+
 
     setCompGuess(() => {
       return newCompGuess;
     });
-    console.log(compGuess);
+
 
     setResult(true)
   }
-
 
   return (
 
