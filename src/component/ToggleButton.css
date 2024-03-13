@@ -1,0 +1,19 @@
+#toggle-button {
+    color: black;
+}
+
+#toggle-button .left {
+    /* aspect-ratio: 1/1; */
+    padding: 1vh 1.05vw;
+    border: 2px solid aqua;
+    border-top-left-radius: 22.5px;
+    border-end-start-radius: 22.5px;
+}
+
+#toggle-button .right {
+    /* aspect-ratio: 1/1.0005; */
+    padding: 1vh 1.05vw;
+    border: 2px solid aqua;
+    border-top-right-radius:22.5px;
+    border-end-end-radius: 22.5px; 
+} 
