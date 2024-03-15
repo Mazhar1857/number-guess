@@ -11,14 +11,14 @@ import { useEffect, useState } from 'react';
 
 
 function App() {
-  const [targetNum, setTargetNum] = useState(0);
-  const [compGuess, setCompGuess] = useState(0);
+  const [targetNum, setTargetNum] = useState(NaN);
+  const [compGuess, setCompGuess] = useState(NaN);
   const [guess, setGuess] = useState(0);
   const [result, setResult] = useState(false);
   const [compScore, setCompScore] = useState(0);
   const [yourScore, setYourScore] = useState(0);
-  const [compDiff, setCompDiff] = useState(null);
-  const [humanDiff, setHumanDiff] = useState(null);
+  const [compDiff, setCompDiff] = useState(NaN);
+  const [humanDiff, setHumanDiff] = useState(NaN);
   const [round, setRound] = useState(1);
   const [guessBtnEnable, setGuessBtnEnable] = useState(false);
   const [nextBtnEnable, setNextBtnEnable] = useState(true);
@@ -33,12 +33,15 @@ function App() {
 
   useEffect(() => {
     setHumanDiff(Math.abs(targetNum - guess));
+
   }, [compDiff])
+
+
 
 
   useEffect(() => {
     setWin(() => {
-      if (compDiff !== null && humanDiff !== null) {
+      if (!isNaN(compDiff) && !isNaN(humanDiff)) {
         return compDiff >= humanDiff ? 'human' : 'computer';
       }
     })
@@ -93,6 +96,12 @@ function App() {
     setCompGuess(() => {
       return newCompGuess;
     });
+
+    // setWin(() => {
+    //   if (compDiff !== null && humanDiff !== null) {
+    //     return compDiff >= humanDiff ? 'human' : 'computer';
+    //   }
+    // })
 
 
     setResult(true)
