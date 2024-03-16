@@ -4,10 +4,8 @@ import TargetNumber from './component/TargetNumber';
 import ComputerGuess from './component/ComputerGuess';
 import FootNote from './component/FootNote';
 import NextRound from './component/NextRound';
-import { useEffect, useState } from 'react';
-
-
-
+import { useContext, useEffect, useState } from 'react';
+import YourGuessContext from './context/NumberGusserContext';
 
 
 function App() {
@@ -22,7 +20,6 @@ function App() {
   const [round, setRound] = useState(1);
   const [guessBtnEnable, setGuessBtnEnable] = useState(false);
   const [nextBtnEnable, setNextBtnEnable] = useState(true);
-
   const [win, setWin] = useState(false);
 
 
@@ -35,9 +32,6 @@ function App() {
     setHumanDiff(Math.abs(targetNum - guess));
 
   }, [compDiff])
-
-
-
 
   useEffect(() => {
     setWin(() => {
@@ -67,6 +61,8 @@ function App() {
 
   }, [win, round])
 
+  const b = useContext(YourGuessContext);
+
 
   const nextRound = () => {
     setWin(null)
@@ -76,10 +72,10 @@ function App() {
     })
     setGuessBtnEnable(false);
     setNextBtnEnable(true);
+    b.setGuess(0);
   }
 
   const upDateGuess = (humanGuess) => {
-
 
     const newTargetNum = Math.floor((Math.random() * 10) + 1);
     const newCompGuess = Math.floor((Math.random() * 10) + 1);
@@ -92,33 +88,26 @@ function App() {
       return newTargetNum;
     });
 
-
     setCompGuess(() => {
       return newCompGuess;
     });
-
-    // setWin(() => {
-    //   if (compDiff !== null && humanDiff !== null) {
-    //     return compDiff >= humanDiff ? 'human' : 'computer';
-    //   }
-    // })
-
 
     setResult(true)
   }
 
   return (
-
-    <div className="App">
-      <h1>Number Guesser!</h1>
-      <div className='grid'>
-        <div className='app-target-number'><TargetNumber round={round} targetNum={targetNum} result={result} /></div>
-        <div className='app-your-guess'><YourGuess guessBtnEnable={guessBtnEnable} upDateGuess={upDateGuess} yourScore={yourScore} win={win} /></div>
-        <div className='app-computer-guess'><ComputerGuess compGuess={compGuess} result={result} compScore={compScore} win={win} /></div>
-        <div className='app-next-round'><NextRound nextBtnEnable={nextBtnEnable} onclick={nextRound} /></div>
-        <div className='app-foot-note'><FootNote /></div>
+    <>
+      <div className="App">
+        <h1>Number Guesser!</h1>
+        <div className='grid'>
+          <div className='app-target-number'><TargetNumber round={round} targetNum={targetNum} result={result} /></div>
+          <div className='app-your-guess'><YourGuess guessBtnEnable={guessBtnEnable} upDateGuess={upDateGuess} yourScore={yourScore} win={win} /></div>
+          <div className='app-computer-guess'><ComputerGuess compGuess={compGuess} result={result} compScore={compScore} win={win} /></div>
+          <div className='app-next-round'><NextRound nextBtnEnable={nextBtnEnable} onclick={nextRound} /></div>
+          <div className='app-foot-note'><FootNote /></div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
